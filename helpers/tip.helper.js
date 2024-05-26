@@ -1,5 +1,6 @@
 const Tip = require("../models/tip.model");
 const { logger } = require("../config/logger.config");
+const moment = require("moment");
 
 /**
  * Helper function to create tip for user
@@ -35,7 +36,15 @@ async function createTip(userId, data) {
  */
 async function getTips(userId, startDate, endDate) {
   try {
-    const tips = await Tip.find({ user: userId });
+    const startingDate = startDate ? moment(startDate, 'DD-MM-YYYY').toDate() : new Date();
+    const endingDate = endDate ? moment(endDate, 'DD-MM-YYYY').toDate() : new Date();
+    const tips = await Tip.find({
+      user: userId,
+      $and: [
+        { createdAt: { $gte: startingDate } },
+        { createdAt: { $lte: endingDate } },
+      ],
+    }, {place:1, totalAmount: 1, tipAmount: 1, _id: 0});
     return tips;
   } catch (error) {
     logger.error("Error in getting tips for the user", {
