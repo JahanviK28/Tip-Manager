@@ -1,6 +1,7 @@
 const Tip = require("../models/tip.model");
 const { logger } = require("../config/logger.config");
 const moment = require("moment");
+const { errorMessage } = require("../enum/response-message.enum");
 
 /**
  * Helper function to create tip for user
@@ -23,7 +24,7 @@ async function createTip(userId, data) {
     await tip.save();
     return { tip: tip.tipAmount };
   } catch (error) {
-    logger.error("Error in creating a tip", { error: error.message });
+    logger.error(errorMessage.TIP_CREATION_FAILURE, { error: error.message });
     throw new Error(error);
   }
 }
@@ -36,18 +37,25 @@ async function createTip(userId, data) {
  */
 async function getTips(userId, startDate, endDate) {
   try {
-    const startingDate = startDate ? moment(startDate, 'DD-MM-YYYY').toDate() : new Date();
-    const endingDate = endDate ? moment(endDate, 'DD-MM-YYYY').toDate() : new Date();
-    const tips = await Tip.find({
-      user: userId,
-      $and: [
-        { createdAt: { $gte: startingDate } },
-        { createdAt: { $lte: endingDate } },
-      ],
-    }, {place:1, totalAmount: 1, tipAmount: 1, _id: 0});
+    const startingDate = startDate
+      ? moment(startDate, "DD-MM-YYYY").toDate()
+      : new Date();
+    const endingDate = endDate
+      ? moment(endDate, "DD-MM-YYYY").toDate()
+      : new Date();
+    const tips = await Tip.find(
+      {
+        user: userId,
+        $and: [
+          { createdAt: { $gte: startingDate } },
+          { createdAt: { $lte: endingDate } },
+        ],
+      },
+      { place: 1, totalAmount: 1, tipAmount: 1, _id: 0 }
+    );
     return tips;
   } catch (error) {
-    logger.error("Error in getting tips for the user", {
+    logger.error(errorMessage.TIP_FETCHING_FAILURE, {
       error: error.message,
     });
     throw new Error(error);

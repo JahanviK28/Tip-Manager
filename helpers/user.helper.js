@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { logger } = require("../config/logger.config");
+const { errorMessage } = require("../enum/response-message.enum");
 
 /**
  * Helper function to create user
@@ -37,7 +38,7 @@ async function registerUser(data, filePath) {
       token: user.token,
     };
   } catch (error) {
-    logger.error("Error in register user helper", { error: error?.message });
+    logger.error(errorMessage.USER_REGISTERATION_FAILURE, { error: error?.message });
     throw new Error(error);
   }
 }
@@ -54,7 +55,7 @@ async function loginUser(data) {
       throw new Error("Invalid credentials");
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = bcrypt.compareSync(password, user.password);
     if (!isMatch) {
       throw new Error("Invalid credentials");
     }
@@ -70,7 +71,7 @@ async function loginUser(data) {
       token: user.token,
     };
   } catch (error) {
-    logger.error("Error in login user helper>>", { error: error?.message });
+    logger.error(errorMessage.USER_REGISTERATION_FAILURE, { error: error?.message });
     throw new Error(error);
   }
 }
