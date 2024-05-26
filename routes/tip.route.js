@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/calculate", authenticate, validateCreateTip, async (req, res) => {
   try {
     const tip = await createTip(req.user._id, req.body);
-    return res.status(201).json(tip);
+    return res.status(200).json(tip);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
