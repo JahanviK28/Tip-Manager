@@ -54,11 +54,11 @@ Tip Manager is a web application that allows users to calculate tips and store t
 ## API Endpoints
 
 ## User Routes
-- POST /api/user: Create a user/sign up
+- POST /api/user/signUp: Create a user/sign up
 - POST /api/user/login: User login
 
 ## Tip Routes
-- POST /api/tips: Create a tip
+- POST /api/tips/calculate: Create a tip
 - GET /api/tips: Retrieve tips
 
 ## Postman
