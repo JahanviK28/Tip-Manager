@@ -62,11 +62,6 @@ Tip Manager is a web application that allows users to calculate tips and store t
 - GET /api/tips: Retrieve tips
 
 ## Postman
-    ```bash
-[https://www.postman.com/lively-spaceship-639148/workspace/tasks/collection/25125713-2a35fb8d-b12a-4bae-a526-cff8131d32f1?action=share&creator=25125713]
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details. 
 ```bash
-You can copy this content and save it as `README.md` in your GitHub repository. Adjust any specific details as needed for your project.
+ https://www.postman.com/lively-spaceship-639148/workspace/tasks/collection/25125713-2a35fb8d-b12a-4bae-a526-cff8131d32f1?action=share&creator=25125713
 
